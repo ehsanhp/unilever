@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="فروشگاه دیلم یونیلیور - عطر و محصولات بهداشتی لوکس در بندر دیلم">
+  <meta name="theme-color" content="#c9a227">
+  <title>دیلم یونیلیور | فروشگاه عطر و محصولات بهداشتی</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="images/icon-192.png">
+  <link rel="apple-touch-icon" href="images/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header" id="header"></header>
+
+  <section class="hero">
+    <h1>دیلم <span>یونیلیور</span></h1>
+    <p>تجربه‌ای لوکس از عطرهای خاص و محصولات بهداشتی با کیفیت در بندر دیلم</p>
+    <div class="hero-actions">
+      <a href="products.html" class="btn btn-primary">مشاهده محصولات</a>
+      <a href="contact.html" class="btn btn-outline">تماس با ما</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">دسته‌بندی‌ها</h2>
+      <p class="section-subtitle">محصولات مورد نظر خود را انتخاب کنید</p>
+      <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--bg-soft);">
+    <div class="container">
+      <h2 class="section-title">محصولات ویژه</h2>
+      <p class="section-subtitle">برخی از محبوب‌ترین عطرهای فروشگاه</p>
+      <div class="products-grid" id="featuredProducts"></div>
+      <div class="text-center mt-3">
+        <a href="products.html" class="btn btn-outline">مشاهده همه محصولات</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">گالری فروشگاه</h2>
+      <p class="section-subtitle">نمایی از قفسه‌های عطر دیلم یونیلیور</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/1000253459.jpg" alt="قفسه عطر ۱" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="images/1000253458.jpg" alt="قفسه عطر ۲" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="images/1000253457.jpg" alt="قفسه عطر ۳" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- مودال استعلام قیمت -->
+  <div class="modal-overlay" id="inquiryModal">
+    <div class="modal">
+      <h3>استعلام قیمت</h3>
+      <p>محصول: <strong id="inquiryProductName"></strong></p>
+      <form id="inquiryForm">
+        <input type="hidden" id="inquiryProductId">
+        <div class="form-group">
+          <label for="customerName">نام شما</label>
+          <input type="text" id="customerName" placeholder="نام و نام خانوادگی" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeInquiryModal()">انصراف</button>
+          <button type="submit" class="btn btn-primary">ارسال به واتساپ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

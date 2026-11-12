@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تماس با فروشگاه دیلم یونیلیور">
+  <meta name="theme-color" content="#c9a227">
+  <title>تماس با ما | دیلم یونیلیور</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="images/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header" id="header"></header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">تماس با ما</h1>
+      <p class="section-subtitle">برای استعلام قیمت یا هر سوالی با ما در ارتباط باشید</p>
+
+      <div style="max-width: 500px; margin: 0 auto;">
+        <div class="admin-card" id="contactInfo">
+          <!-- از JS -->
+        </div>
+
+        <div class="admin-card" style="margin-top: 1.5rem;">
+          <h3 style="margin-bottom: 1rem;">ارسال پیام مستقیم</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem;">
+            نام خود را وارد کنید و روی دکمه بزنید تا پیام آماده در واتساپ باز شود.
+          </p>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactName">نام شما</label>
+              <input type="text" id="contactName" placeholder="نام و نام خانوادگی" required>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">پیام (اختیاری)</label>
+              <textarea id="contactMessage" rows="3" placeholder="مثلاً: قیمت عطر Libre را می‌خواهم"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">ارسال به واتساپ</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const info = loadShopInfo();
+      document.getElementById("contactInfo").innerHTML = `
+        <h3 style="margin-bottom:1rem;">اطلاعات فروشگاه</h3>
+        <p>📍 <strong>آدرس:</strong> ${info.address}</p>
+        <p style="margin-top:0.5rem;">📞 <strong>تلفن / واتساپ:</strong> <a href="tel:${info.phone}">${info.phone}</a></p>
+        <p style="margin-top:1rem;">
+          <a href="https://wa.me/${info.whatsapp}" class="btn btn-primary btn-sm" target="_blank">چت مستقیم واتساپ</a>
+        </p>
+      `;
+
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("contactName").value.trim();
+        const msg = document.getElementById("contactMessage").value.trim();
+        if (!name) return;
+        
+        let text = `سلام، من ${name} هستم.`;
+        if (msg) text += `\n${msg}`;
+        text += `\nاز سایت دیلم یونیلیور`;
+        
+        window.open(`https://wa.me/${info.whatsapp}?text=${encodeURIComponent(text)}`, "_blank");
+      });
+    });
+  </script>
+</body>
+</html>

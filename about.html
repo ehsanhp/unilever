@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="درباره فروشگاه دیلم یونیلیور در بندر دیلم">
+  <meta name="theme-color" content="#c9a227">
+  <title>درباره ما | دیلم یونیلیور</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="images/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header" id="header"></header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">درباره ما</h1>
+      <div class="about-content" id="aboutContent">
+        <!-- محتوا از JS لود می‌شود -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--bg-soft);">
+    <div class="container">
+      <h2 class="section-title">گالری</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/1000253459.jpg" alt="قفسه عطر" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="images/1000253458.jpg" alt="قفسه عطر" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="images/1000253457.jpg" alt="قفسه عطر" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const info = loadShopInfo();
+      document.getElementById("aboutContent").innerHTML = `
+        <p style="font-size:1.15rem; color:var(--text); margin-bottom:1.5rem;">${info.about}</p>
+        <p><strong>آدرس:</strong> ${info.address}</p>
+        <p style="margin-top:1.5rem;">
+          <a href="contact.html" class="btn btn-primary">تماس با ما</a>
+        </p>
+      `;
+    });
+  </script>
+</body>
+</html>
