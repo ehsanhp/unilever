@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a1a">
+  <title>پنل مدیریت | دیلم یونیلیور</title>
+  <link rel="icon" href="images/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="loginScreen">
+    <div class="login-box">
+      <h2 style="text-align:center; margin-bottom:0.5rem;">پنل مدیریت</h2>
+      <p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem; font-size:0.9rem;">دیلم یونیلیور</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="password">رمز عبور</label>
+          <input type="password" id="password" placeholder="رمز عبور را وارد کنید" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">ورود</button>
+      </form>
+      <p id="loginError" style="color:#c0392b; text-align:center; margin-top:1rem; font-size:0.9rem; display:none;">رمز عبور اشتباه است</p>
+    </div>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <header class="admin-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo">دیلم <span style="color:var(--accent)">یونیلیور</span> — مدیریت</a>
+        <button class="btn btn-sm btn-outline" style="color:#fff; border-color:#555;" onclick="logout()">خروج</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <a href="#" class="active" data-tab="products">محصولات</a>
+        <a href="#" data-tab="categories">دسته‌بندی‌ها</a>
+        <a href="#" data-tab="shop">اطلاعات فروشگاه</a>
+        <a href="#" data-tab="export">خروجی داده</a>
+      </aside>
+
+      <main class="admin-content">
+        <!-- محصولات -->
+        <div id="tab-products" class="tab-content">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <h2>مدیریت محصولات</h2>
+            <button class="btn btn-primary btn-sm" onclick="showAddProduct()">+ افزودن محصول</button>
+          </div>
+
+          <div class="admin-card">
+            <div style="overflow-x:auto;">
+              <table class="admin-table" id="productsTable">
+                <thead>
+                  <tr>
+                    <th>نام</th>
+                    <th>دسته‌بندی</th>
+                    <th>ویژه</th>
+                    <th>عملیات</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- دسته‌بندی‌ها -->
+        <div id="tab-categories" class="tab-content hidden">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <h2>دسته‌بندی‌ها</h2>
+            <button class="btn btn-primary btn-sm" onclick="showAddCategory()">+ افزودن دسته</button>
+          </div>
+          <div class="admin-card">
+            <table class="admin-table" id="categoriesTable">
+              <thead>
+                <tr>
+                  <th>آیکون</th>
+                  <th>نام</th>
+                  <th>شناسه</th>
+                  <th>عملیات</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- اطلاعات فروشگاه -->
+        <div id="tab-shop" class="tab-content hidden">
+          <h2 style="margin-bottom:1.5rem;">اطلاعات فروشگاه</h2>
+          <div class="admin-card">
+            <form id="shopForm">
+              <div class="form-group">
+                <label>نام فروشگاه</label>
+                <input type="text" id="shopName" required>
+              </div>
+              <div class="form-group">
+                <label>متن درباره ما</label>
+                <textarea id="shopAbout" rows="5" required></textarea>
+              </div>
+              <div class="form-group">
+                <label>آدرس</label>
+                <input type="text" id="shopAddress">
+              </div>
+              <div class="form-group">
+                <label>شماره تلفن / واتساپ (بدون صفر اول، با ۹۸)</label>
+                <input type="text" id="shopWhatsapp" placeholder="989171789950">
+              </div>
+              <div class="form-group">
+                <label>شماره نمایشی</label>
+                <input type="text" id="shopPhone" placeholder="09171789950">
+              </div>
+              <div class="form-group">
+                <label>اینستاگرام (بدون @)</label>
+                <input type="text" id="shopInstagram">
+              </div>
+              <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- خروجی -->
+        <div id="tab-export" class="tab-content hidden">
+          <h2 style="margin-bottom:1.5rem;">خروجی و پشتیبان‌گیری</h2>
+          <div class="admin-card">
+            <p style="color:var(--text-muted); margin-bottom:1rem;">
+              چون سایت روی GitHub Pages است، داده‌های اضافه‌شده فقط روی همین مرورگر ذخیره می‌شوند.
+              برای دائمی کردن، داده‌ها را کپی کرده و در فایل <code>js/data.js</code> جایگزین کنید.
+            </p>
+            <button class="btn btn-primary" onclick="exportData()">دانلود فایل داده (JSON)</button>
+            <button class="btn btn-outline mt-2" onclick="resetToDefault()">بازگشت به داده‌های اولیه</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- مودال افزودن/ویرایش محصول -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal" style="max-width:480px;">
+      <h3 id="productModalTitle">افزودن محصول</h3>
+      <form id="productForm">
+        <input type="hidden" id="productId">
+        <div class="form-group">
+          <label>نام محصول</label>
+          <input type="text" id="productName" required>
+        </div>
+        <div class="form-group">
+          <label>برند (اختیاری)</label>
+          <input type="text" id="productBrand">
+        </div>
+        <div class="form-group">
+          <label>دسته‌بندی</label>
+          <select id="productCategory" required></select>
+        </div>
+        <div class="form-group">
+          <label>توضیحات</label>
+          <textarea id="productDesc" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>آدرس تصویر (یا نام فایل داخل پوشه images)</label>
+          <input type="text" id="productImage" placeholder="images/1000253459.jpg">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="productFeatured"> نمایش در محصولات ویژه
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeProductModal()">انصراف</button>
+          <button type="submit" class="btn btn-primary">ذخیره</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- مودال دسته -->
+  <div class="modal-overlay" id="categoryModal">
+    <div class="modal">
+      <h3 id="categoryModalTitle">افزودن دسته‌بندی</h3>
+      <form id="categoryForm">
+        <input type="hidden" id="categoryOldId">
+        <div class="form-group">
+          <label>شناسه (انگلیسی، بدون فاصله)</label>
+          <input type="text" id="categoryId" required placeholder="مثلاً perfume">
+        </div>
+        <div class="form-group">
+          <label>نام نمایشی</label>
+          <input type="text" id="categoryName" required>
+        </div>
+        <div class="form-group">
+          <label>آیکون (ایموجی)</label>
+          <input type="text" id="categoryIcon" placeholder="🌸">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeCategoryModal()">انصراف</button>
+          <button type="submit" class="btn btn-primary">ذخیره</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    // توابع بارگذاری داده
+    function loadProducts() {
+      const stored = localStorage.getItem("dilem_products");
+      return stored ? JSON.parse(stored) : DEFAULT_PRODUCTS;
+    }
+    function loadCategories() {
+      const stored = localStorage.getItem("dilem_categories");
+      return stored ? JSON.parse(stored) : DEFAULT_CATEGORIES;
+    }
+    function loadShopInfo() {
+      const stored = localStorage.getItem("dilem_shop_info");
+      return stored ? JSON.parse(stored) : DEFAULT_SHOP_INFO;
+    }
+
+    const ADMIN_PASSWORD = "admin123";
+    let products = loadProducts();
+    let categories = loadCategories();
+    let shopInfo = loadShopInfo();
+
+    // ورود
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const pass = document.getElementById("password").value.trim();
+      if (pass === ADMIN_PASSWORD) {
+        sessionStorage.setItem("dilem_admin", "1");
+        showAdmin();
+      } else {
+        document.getElementById("loginError").style.display = "block";
+      }
+    });
+
+    function logout() {
+      sessionStorage.removeItem("dilem_admin");
+      location.reload();
+    }
+
+    function showAdmin() {
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("adminPanel").classList.remove("hidden");
+      renderProductsTable();
+      renderCategoriesTable();
+      fillShopForm();
+    }
+
+    // چک لاگین
+    if (sessionStorage.getItem("dilem_admin") === "1") {
+      showAdmin();
+    }
+
+    // تب‌ها
+    document.querySelectorAll(".admin-sidebar a").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.querySelectorAll(".admin-sidebar a").forEach(a => a.classList.remove("active"));
+        link.classList.add("active");
+        document.querySelectorAll(".tab-content").forEach(t => t.classList.add("hidden"));
+        document.getElementById("tab-" + link.dataset.tab).classList.remove("hidden");
+      });
+    });
+
+    // محصولات
+    function renderProductsTable() {
+      const tbody = document.querySelector("#productsTable tbody");
+      tbody.innerHTML = products.map(p => {
+        const cat = categories.find(c => c.id === p.category);
+        return `
+          <tr>
+            <td>${p.name}${p.brand ? ` <small style="color:#888">(${p.brand})</small>` : ""}</td>
+            <td>${cat ? cat.name : p.category}</td>
+            <td>${p.featured ? "✅" : "—"}</td>
+            <td>
+              <button class="btn btn-sm btn-outline" onclick="editProduct('${p.id}')">ویرایش</button>
+              <button class="btn btn-sm btn-outline" style="color:#c0392b; border-color:#e74c3c;" onclick="deleteProduct('${p.id}')">حذف</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function showAddProduct() {
+      document.getElementById("productModalTitle").textContent = "افزودن محصول";
+      document.getElementById("productForm").reset();
+      document.getElementById("productId").value = "";
+      fillCategorySelect();
+      document.getElementById("productModal").classList.add("active");
+    }
+
+    function editProduct(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById("productModalTitle").textContent = "ویرایش محصول";
+      document.getElementById("productId").value = p.id;
+      document.getElementById("productName").value = p.name;
+      document.getElementById("productBrand").value = p.brand || "";
+      document.getElementById("productDesc").value = p.description || "";
+      document.getElementById("productImage").value = p.image || "";
+      document.getElementById("productFeatured").checked = !!p.featured;
+      fillCategorySelect();
+      document.getElementById("productCategory").value = p.category;
+      document.getElementById("productModal").classList.add("active");
+    }
+
+    function closeProductModal() {
+      document.getElementById("productModal").classList.remove("active");
+    }
+
+    function fillCategorySelect() {
+      const sel = document.getElementById("productCategory");
+      sel.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
+    }
+
+    document.getElementById("productForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = document.getElementById("productId").value;
+      const data = {
+        id: id || "p" + Date.now(),
+        name: document.getElementById("productName").value.trim(),
+        brand: document.getElementById("productBrand").value.trim(),
+        category: document.getElementById("productCategory").value,
+        description: document.getElementById("productDesc").value.trim(),
+        image: document.getElementById("productImage").value.trim() || "images/1000253459.jpg",
+        featured: document.getElementById("productFeatured").checked
+      };
+
+      if (id) {
+        const idx = products.findIndex(p => p.id === id);
+        if (idx !== -1) products[idx] = data;
+      } else {
+        products.push(data);
+      }
+      saveProducts();
+      renderProductsTable();
+      closeProductModal();
+    });
+
+    function deleteProduct(id) {
+      if (!confirm("آیا از حذف این محصول مطمئن هستید؟")) return;
+      products = products.filter(p => p.id !== id);
+      saveProducts();
+      renderProductsTable();
+    }
+
+    // دسته‌بندی
+    function renderCategoriesTable() {
+      const tbody = document.querySelector("#categoriesTable tbody");
+      tbody.innerHTML = categories.map(c => `
+        <tr>
+          <td style="font-size:1.4rem;">${c.icon || "📦"}</td>
+          <td>${c.name}</td>
+          <td><code>${c.id}</code></td>
+          <td>
+            <button class="btn btn-sm btn-outline" onclick="editCategory('${c.id}')">ویرایش</button>
+            <button class="btn btn-sm btn-outline" style="color:#c0392b; border-color:#e74c3c;" onclick="deleteCategory('${c.id}')">حذف</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function showAddCategory() {
+      document.getElementById("categoryModalTitle").textContent = "افزودن دسته‌بندی";
+      document.getElementById("categoryForm").reset();
+      document.getElementById("categoryOldId").value = "";
+      document.getElementById("categoryModal").classList.add("active");
+    }
+
+    function editCategory(id) {
+      const c = categories.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById("categoryModalTitle").textContent = "ویرایش دسته‌بندی";
+      document.getElementById("categoryOldId").value = c.id;
+      document.getElementById("categoryId").value = c.id;
+      document.getElementById("categoryName").value = c.name;
+      document.getElementById("categoryIcon").value = c.icon || "";
+      document.getElementById("categoryModal").classList.add("active");
+    }
+
+    function closeCategoryModal() {
+      document.getElementById("categoryModal").classList.remove("active");
+    }
+
+    document.getElementById("categoryForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const oldId = document.getElementById("categoryOldId").value;
+      const data = {
+        id: document.getElementById("categoryId").value.trim().toLowerCase().replace(/\s+/g, "-"),
+        name: document.getElementById("categoryName").value.trim(),
+        icon: document.getElementById("categoryIcon").value.trim()
+      };
+
+      if (oldId) {
+        const idx = categories.findIndex(c => c.id === oldId);
+        if (idx !== -1) {
+          // آپدیت محصولات هم اگر شناسه عوض شده
+          if (oldId !== data.id) {
+            products.forEach(p => { if (p.category === oldId) p.category = data.id; });
+            saveProducts();
+          }
+          categories[idx] = data;
+        }
+      } else {
+        if (categories.some(c => c.id === data.id)) {
+          alert("این شناسه قبلاً وجود دارد");
+          return;
+        }
+        categories.push(data);
+      }
+      saveCategories();
+      renderCategoriesTable();
+      closeCategoryModal();
+    });
+
+    function deleteCategory(id) {
+      if (products.some(p => p.category === id)) {
+        alert("این دسته‌بندی دارای محصول است. ابتدا محصولات را جابجا یا حذف کنید.");
+        return;
+      }
+      if (!confirm("حذف این دسته‌بندی؟")) return;
+      categories = categories.filter(c => c.id !== id);
+      saveCategories();
+      renderCategoriesTable();
+    }
+
+    // اطلاعات فروشگاه
+    function fillShopForm() {
+      document.getElementById("shopName").value = shopInfo.name || "";
+      document.getElementById("shopAbout").value = shopInfo.about || "";
+      document.getElementById("shopAddress").value = shopInfo.address || "";
+      document.getElementById("shopWhatsapp").value = shopInfo.whatsapp || "";
+      document.getElementById("shopPhone").value = shopInfo.phone || "";
+      document.getElementById("shopInstagram").value = shopInfo.instagram || "";
+    }
+
+    document.getElementById("shopForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      shopInfo = {
+        name: document.getElementById("shopName").value.trim(),
+        about: document.getElementById("shopAbout").value.trim(),
+        address: document.getElementById("shopAddress").value.trim(),
+        whatsapp: document.getElementById("shopWhatsapp").value.trim(),
+        phone: document.getElementById("shopPhone").value.trim(),
+        instagram: document.getElementById("shopInstagram").value.trim()
+      };
+      saveShopInfo();
+      alert("اطلاعات فروشگاه ذخیره شد");
+    });
+
+    // خروجی
+    function exportData() {
+      const data = {
+        products,
+        categories,
+        shopInfo,
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "dilem-unilever-data.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetToDefault() {
+      if (!confirm("همه تغییرات حذف و به حالت اولیه برمی‌گردد. مطمئنید؟")) return;
+      localStorage.removeItem("dilem_products");
+      localStorage.removeItem("dilem_categories");
+      localStorage.removeItem("dilem_shop_info");
+      location.reload();
+    }
+
+    // توابع ذخیره (از data.js)
+    function saveProducts() {
+      localStorage.setItem("dilem_products", JSON.stringify(products));
+    }
+    function saveCategories() {
+      localStorage.setItem("dilem_categories", JSON.stringify(categories));
+    }
+    function saveShopInfo() {
+      localStorage.setItem("dilem_shop_info", JSON.stringify(shopInfo));
+    }
+  </script>
+</body>
+</html>
